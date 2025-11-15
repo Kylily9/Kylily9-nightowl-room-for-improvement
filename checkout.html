@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checkout — Night Owl Liquor</title>
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="home.html">
+      <img src="wow/bg/download.png" alt="Night Owl Liquor Logo" style="height: 40px; width: auto; margin-right: 10px;">
+    Night Owl Liquor</a>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="wine.html">Wine</a>
+      <a href="harddrink.html">Hard Drink</a>
+      <a href="cart.html">Cart(<span id="cart-count">0</span>)</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="order-tracking.html">Order Tracking</a>
+      <a href="profile.html">Profile</a>
+      <a href="feedback.html">Feedback</a>
+      <span id="user-display"></span>
+      <button id="logout-btn" class="btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Checkout / Payment</h1>
+    <div id="order-summary"></div>
+    <form id="checkout-form">
+      <label>Full Name: 
+        <input type="text" name="name" required>
+      </label>
+      <label>Address: 
+        <input type="text" name="address" required>
+      </label>
+      <label>Phone: 
+        <input type="text" name="phone" required>
+      </label>
+      <label>Payment Method:
+        <select name="payment" required>
+          <option value="cash">Cash on Delivery</option>
+          <option value="gcash">GCash</option>
+          <option value="maya">Maya</option>
+          <option value="paypal">PayPal</option>
+        </select>
+      </label>
+      <button type="submit" class="btn">Place Order</button>
+    </form>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script src="js/script.js"></script>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateCartCount() {
+      const count = cart.reduce((t, i) => t + i.quantity, 0);
+      document.getElementById("cart-count").textContent = count;
+    }
+    function displayOrderSummary() {
+      const summaryDiv = document.getElementById("order-summary");
+      if (cart.length === 0) {
+        summaryDiv.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      summaryDiv.innerHTML = `
+        <h2>Order Summary</h2>
+        <ul>
+          ${cart.map(item => `<li>${item.name} x ${item.quantity} — $${item.price * item.quantity}</li>`).join("")}
+        </ul>
+        <p><strong>Total: $${cart.reduce((total, item) => total + item.price * item.quantity, 0)}</strong></p>
+      `;
+    }
+
+    document.getElementById("checkout-form").addEventListener("submit", (event) => {
+      event.preventDefault(); 
+
+      localStorage.setItem("orderStatus", "delivered");
+
+      localStorage.removeItem("cart");
+
+      window.location.href = "order-tracking.html";
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCartCount();
+      displayOrderSummary();
+    });
+  </script>
+</body>
+</html>

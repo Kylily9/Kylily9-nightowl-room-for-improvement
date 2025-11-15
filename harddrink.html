@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Hard Drinks — Night Owl</title>
+<link rel="stylesheet" href="harddrink.css">
+</head>
+
+<body>
+<header class="nav">
+  <a class="brand" href="home.html">
+    <img src="wow/bg/download.png" alt="Night Owl Liquor Logo" class="logo">
+    Night Owl Liquor
+  </a>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="wine.html">Wine</a>
+    <a href="harddrink.html">Hard Drink</a>
+    <a href="cart.html">Cart(<span id="cart-count">0</span>)</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="order-tracking.html">Order Tracking</a>
+    <a href="profile.html">Profile</a>
+    <a href="feedback.html">Feedback</a>
+    <button id="logout-btn" class="btn">Logout</button>
+  </nav>
+</header>
+
+<div class="hero-section">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="wow/bg/try.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay">
+    <div class="hero-text">
+      <h1>Our Hard Drink Selection</h1>
+      <p>Top-shelf whiskey, rum, vodka, gin, tequila & more – delivered to your door.</p>
+    </div>
+
+    <div class="product-overlay">
+      <div class="product-card">
+        <img src="wow/harddrink/captain morgan.png" alt="Captain Morgan">
+        <h2>Captain Morgan</h2>
+        <p>$38</p>
+        <button onclick="addToCart({ id: 101, name: 'Captain Morgan', price: 38, img: 'wow/harddrink/captain morgan.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/chartreuse.png" alt="Chartreuse">
+        <h2>Chartreuse</h2>
+        <p>3,246</p>
+        <button onclick="addToCart({ id: 102, name: 'Chartreuse', price: 55, img: 'wow/harddrink/chartreuse.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/four roses.png" alt="Four Roses">
+        <h2>Four Roses</h2>
+        <p>2,066</p>
+        <button onclick="addToCart({ id: 103, name: 'Four Roses', price: 35, img: 'wow/harddrink/four roses.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/knob creek.png" alt="Knob Creek">
+        <h2>Knob Creek</h2>
+        <p>2,361</p>
+        <button onclick="addToCart({ id: 104, name: 'Knob Creek', price: 40, img: 'wow/harddrink/knob creek.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/JackDaniels.png" alt="Jack Daniels">
+        <h2>Jack Daniels 200ml</h2>
+        <p>2,656</p>
+        <button onclick="addToCart({ id: 105, name: 'Jack Daniels', price: 38, img: 'wow/harddrink/JackDaniels.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/download.png" alt="Jameson">
+        <h2>Jameson</h2>
+        <p>3,541</p>
+        <button onclick="addToCart({ id: 106, name: 'Jameson', price: 38, img: 'wow/harddrink/download.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/PATRON Silver Tequila.png" alt="PATRON Silver Tequila">
+        <h2>PATRON Silver Tequila 700ml</h2>
+        <p>3,541</p>
+        <button onclick="addToCart({ id: 105, name: 'PATRON Silver Tequila', price: 38, img: 'wow/harddrink/PATRON Silver Tequila.png' })">Add to Cart</button>
+      </div>
+
+      <div class="product-card">
+        <img src="wow/harddrink/Rittenhouse Rye.png" alt="Rittenhouse Rye">
+        <h2>Rittenhouse Rye</h2>
+        <p>2,243</p>
+        <button onclick="addToCart({ id: 105, name: 'Rittenhouse Rye', price: 38, img: 'wow/harddrink/Rittenhouse Rye.png' })">Add to Cart</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Night Owl Liquor | <a href="contact.html">Contact Us</a></p>
+</footer>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(item) {
+    const existing = cart.find(i => i.id === item.id);
+    if (existing) {
+        existing.quantity++;
+    } else {
+        item.quantity = 1;
+        cart.push(item);
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+}
+
+function updateCartCount() {
+    const count = cart.reduce((sum, i) => sum + i.quantity, 0);
+    document.getElementById("cart-count").textContent = count;
+}
+
+document.addEventListener("DOMContentLoaded", updateCartCount);
+</script>
+
+</body>
+</html>

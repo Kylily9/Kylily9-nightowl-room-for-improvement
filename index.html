@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup Form</title>
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  </head>
+  <body>
+
+    <div class="container">
+      
+      <div class="form-box login">
+        <form id="loginForm">
+          <h1>Login</h1>
+          <div class="input-box">
+            <input type="text" name="email" placeholder="Username" required>
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" name="password" placeholder="Password" required>
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <p id="loginError" style="color: red; display: none;">Invalid credentials. Please try again.</p>
+          <p id="loginAttempts" style="color: red; display: none;"></p>
+        </form>
+      </div>
+
+      <div class="form-box register">
+        <form id="registerForm">
+          <h1>Registration</h1>
+          <div class="input-box">
+            <input type="text" name="email" placeholder="Username" required>
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <div class="input-box">
+            <input type="password" name="password" placeholder="Password" required>
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <button type="submit" class="btn">Register</button>
+        </form>
+      </div>
+
+      <div class="toggle-box">
+        <div class="toggle-panel toggle-left">
+          <h1>Hello, Welcome to Night Owl!</h1>
+          <p>Don't have an account?</p>
+          <button class="btn register-btn">Register</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Welcome back!</h1>
+          <p>Already have an account?</p>
+          <button class="btn login-btn">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+      const container = document.querySelector('.container');
+const registerBtn = document.querySelector('.register-btn');
+const loginBtn = document.querySelector('.login-btn');
+
+registerBtn.addEventListener('click', () => {
+    container.classList.add('active');
+});
+
+loginBtn.addEventListener('click', () => {
+    container.classList.remove('active');
+});
+
+const maxAttempts = 3;
+let loginAttempts = 0;
+
+// Registration logic
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
+
+    let storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+    const userExists = storedUsers.some(user => user.username === username);
+    if (userExists) {
+        alert("Username already exists! Please choose a different one.");
+        return;
+    }
+
+    storedUsers.push({ username, password });
+    localStorage.setItem('users', JSON.stringify(storedUsers));
+
+    alert("Registration successful! You can now log in.");
+    container.classList.remove('active');
+});
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const username = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
+
+    const correctUsername = 'admin';
+    const correctPassword = 'admin1234';
+
+    if (username === correctUsername && password === correctPassword) {
+        window.location.href = 'home.html'; 
+    } else {
+        loginAttempts++;
+        const loginError = document.getElementById('loginError');
+        const loginAttemptsText = document.getElementById('loginAttempts');
+
+        loginError.style.display = 'block';
+        loginAttemptsText.style.display = 'block';
+        loginAttemptsText.textContent = `Attempt ${loginAttempts} of ${maxAttempts}`;
+
+        if (loginAttempts >= maxAttempts) {
+            e.target.querySelector('button').disabled = true;
+            loginAttemptsText.textContent = "Maximum login attempts reached. Try again later.";
+        }
+    }
+});
+    </script>
+  </body>
+</html>

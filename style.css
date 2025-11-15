@@ -1,0 +1,170 @@
+body {
+  background: #0f1724;
+  color: white;
+  font-family: 'Inter', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.nav {
+  background: #111827;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav a,
+.btn {
+  color: #f6c85f;
+  text-decoration: none;
+  margin-right: 15px;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.brand {
+  font-weight: bold;
+  color: #f6c85f;
+  font-size: 1.2rem;
+}
+
+#cart-count {
+  display: none;          
+  background: #f6c85f;    
+  color: #000;
+  font-weight: bold;
+  border-radius: 50%;
+  padding: 2px 7px;
+  margin-left: 4px;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+#cart-count.show {
+  display: inline-block;     
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: #111827;
+  color: #9ca3af;
+}
+
+.btn {
+  background: #f6c85f;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: #ffd86b;
+  transform: translateY(-1px);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-box {
+  background: #1f2937;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  margin: 20px auto;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.6s ease;
+}
+
+.input-box {
+  position: relative;
+  margin: 15px 0;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px 35px 10px 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background: #374151;
+  color: white;
+}
+
+.input-box i {
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  color: #9ca3af;
+}
+
+h1 {
+  color: #f6c85f;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.toggle-box {
+  background: #1f2937;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.toggle-box h1 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.toggle-box p {
+  color: #9ca3af;
+  margin-bottom: 15px;
+}
+
+.container.active .login {
+  transform: translateX(-400px);
+  opacity: 0;
+}
+
+.container.active .register {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.register {
+  position: absolute;
+  top: 0;
+  transform: translateX(400px);
+  opacity: 0;
+}
+
+@media (max-width: 600px) {
+  .form-box {
+    width: 90%;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav a {
+    margin: 5px 0;
+  }
+}
+

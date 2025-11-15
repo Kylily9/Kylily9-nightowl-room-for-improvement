@@ -1,0 +1,182 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #1C1C1C; 
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.nav {
+  background-color: #333;
+  color: rgb(255, 247, 247);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav .brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #D4AF37;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: #575757;
+  border-radius: 5px;
+}
+
+#logout-btn {
+  margin-left: 20px;
+  padding: 10px 20px;
+  background-color: #D4AF37;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+#logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
+}
+
+.container h1 {
+  font-family: Georgia, serif;
+  color: #D4AF37;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-size: 18px;
+  color: #ffffff;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+form {
+  background-color: #2C2C2C;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #D4AF37;
+  color: #1C1C1C;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #B59B2F;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #bbb;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+footer a {
+  color: #D4AF37;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .container h1 {
+    font-size: 28px;
+  }
+
+  form {
+    padding: 15px;
+  }
+
+  form input, form textarea {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+
+  .container h1 {
+    font-size: 24px;
+  }
+
+  form input, form textarea {
+    font-size: 13px;
+  }
+
+  form button {
+    font-size: 16px;
+  }
+}

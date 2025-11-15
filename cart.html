@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart — Night Owl Liquor</title>
+<link rel="stylesheet" href="cart.css">
+<style>
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.quantity-controls button {
+    width: 25px;
+    height: 25px;
+}
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+.cart-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.remove-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <a class="brand" href="home.html">
+    <img src="wow/bg/download.png" alt="Night Owl Liquor Logo" class="logo">
+    Night Owl Liquor
+  </a>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="wine.html">Wine</a>
+    <a href="harddrink.html">Hard Drink</a>
+    <a href="cart.html">Cart(<span id="cart-count">0</span>)</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="order-tracking.html">Order Tracking</a>
+    <a href="profile.html">Profile</a>
+    <a href="feedback.html">Feedback</a>
+    <button id="logout-btn" class="btn">Logout</button>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Your Cart</h1>
+  <div id="cart-list"></div>
+
+  <div class="cart-actions">
+    <button id="clear-cart" class="btn">Clear Cart</button>
+    <button id="confirm-order" class="btn">Confirm Order</button>
+  </div>
+</main>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function displayCart() {
+    const cartList = document.getElementById("cart-list");
+
+    if (cart.length === 0) {
+        cartList.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+    }
+
+    cartList.innerHTML = cart.map(item => `
+        <div class="cart-item">
+            <img src="${item.img}" class="cart-img">
+            <div class="cart-details">
+                <h3>${item.name}</h3>
+                <p>Price: $${item.price}</p>
+                <div class="quantity-controls">
+                    <button onclick="decreaseQuantity(${item.id})">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="increaseQuantity(${item.id})">+</button>
+                </div>
+                <p>Total: $${item.price * item.quantity}</p>
+            </div>
+            <button onclick="removeFromCart(${item.id})" class="remove-btn">Remove</button>
+        </div>
+    `).join("");
+}
+
+function removeFromCart(id) {
+    cart = cart.filter(i => i.id !== id);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    displayCart();
+}
+
+function increaseQuantity(id) {
+    cart = cart.map(item => {
+        if (item.id === id) item.quantity += 1;
+        return item;
+    });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    displayCart();
+}
+
+function decreaseQuantity(id) {
+    cart = cart.map(item => {
+        if (item.id === id && item.quantity > 1) item.quantity -= 1;
+        return item;
+    });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    displayCart();
+}
+
+document.getElementById("clear-cart").addEventListener("click", () => {
+    cart = [];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    displayCart();
+});
+
+document.getElementById("confirm-order").addEventListener("click", () => {
+    if (cart.length > 0) {
+        localStorage.setItem("orderStatus", "processing");
+        window.location.href = "checkout.html";
+    } else {
+        alert("Your cart is empty!");
+    }
+});
+
+function updateCartCount() {
+    const count = cart.reduce((t, i) => t + i.quantity, 0);
+    document.getElementById("cart-count").textContent = count;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCount();
+    displayCart();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order Tracking — Night Owl Liquor</title>
+  <link rel="stylesheet" href="order-tracking.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="home.html">
+      <img src="wow/bg/download.png" alt="Night Owl Liquor Logo" style="height: 40px; width: auto; margin-right: 10px;">
+      Night Owl Liquor</a>
+    <nav>
+      <a href="about.html">About</a>
+      <a href="wine.html">Wine</a>
+      <a href="harddrink.html">Hard Drink</a>
+      <a href="cart.html">Cart(<span id="cart-count">0</span>)</a>
+      <a href="checkout.html">Checkout</a>
+      <a href="order-tracking.html">Order Tracking</a>
+      <a href="profile.html">Profile</a>
+      <a href="feedback.html">Feedback</a>
+      <span id="user-display"></span>
+      <button id="logout-btn" class="btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Order Tracking</h1>
+    <div id="order-tracking-list">
+      <p>No orders yet.</p>
+    </div>
+
+    <div id="order-status"></div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script src="js/script.js"></script>
+  
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+    function updateCartCount() {
+      const count = cart.reduce((t, i) => t + i.quantity, 0);
+      document.getElementById("cart-count").textContent = count;
+    }
+
+    function displayOrderStatus() {
+      const orderStatus = localStorage.getItem("orderStatus") || "No order placed yet";
+      const statusDiv = document.getElementById("order-status");
+
+      if (orderStatus === "processing") {
+        statusDiv.innerHTML = "<p>Your order is currently being processed. We will notify you once it's shipped.</p>";
+      } else if (orderStatus === "delivered") {
+        statusDiv.innerHTML = "<p>Your order has been delivered!</p>";
+      } else {
+        statusDiv.innerHTML = "<p>No order status available. Please place an order first.</p>";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      updateCartCount(); 
+      displayOrderStatus(); 
+    });
+  </script>
+</body>
+</html>

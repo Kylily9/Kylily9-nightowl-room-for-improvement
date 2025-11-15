@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wine — Night Owl Liquor</title>
+    <link rel="stylesheet" href="wine.css">
+</head>
+
+<body>
+
+<header class="nav">
+  <a class="brand" href="home.html">
+     <img src="wow/bg/download.png" alt="Night Owl Liquor Logo" class="logo">
+    Night Owl Liquor
+  </a>
+  <nav>
+    <a href="about.html">About</a>
+    <a href="wine.html">Wine</a>
+    <a href="harddrink.html">Hard Drink</a>
+    <a href="cart.html">Cart(<span id="cart-count">0</span>)</a>
+    <a href="checkout.html">Checkout</a>
+    <a href="order-tracking.html">Order Tracking</a>
+    <a href="contact.html">Contact</a>
+    <a href="profile.html">Profile</a>
+    <a href="feedback.html">Feedback</a>
+    <button id="logout-btn" class="btn">Logout</button>
+  </nav>
+</header>
+
+<div class="hero-section">
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="wow/bg/try.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay">
+
+        <div class="hero-text">
+            <h1>Our Wine Selection</h1>
+            <p>Explore our curated selection of red, white, and sparkling wines.</p>
+        </div>
+
+        <div class="product-overlay">
+
+            <div class="product-card">
+                <img src="wow/redwine/Château Margaux.png" alt="Château Margaux">
+                <h2>Château Margaux</h2>
+                <p>1,476</p>
+                <button onclick="addToCart({ id: 1, name: 'Château Margaux', price: 25, img: 'wow/redwine/Château Margaux.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/Don Melchor.png" alt="Don Melchor">
+                <h2>Don Melchor</h2>
+                <p>4,338</p>
+                <button onclick="addToCart({ id: 2, name: 'Don Melchor', price: 73.49, img: 'wow/redwine/Don Melchor.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/Masseto.png" alt="Masseto">
+                <h2>Masseto</h2>
+                <p>5,017</p>
+                <button onclick="addToCart({ id: 3, name: 'Masseto', price: 85, img: 'wow/redwine/Masseto.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/Opus One.png" alt="Opus One">
+                <h2>Opus One</h2>
+                <p>7,082</p>
+                <button onclick="addToCart({ id: 4, name: 'Opus One', price: 120, img: 'wow/redwine/Opus One.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/Penfolds Grange.png" alt="Penfolds Grange">
+                <h2>Penfolds Grange</h2>
+                <p>5,784</p>
+                <button onclick="addToCart({ id: 5, name: 'Penfolds Grange', price: 98, img: 'wow/redwine/Penfolds Grange.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/Romanée-Conti.png" alt="Romanée-Conti">
+                <h2>Romanée-Conti</h2>
+                <p>5,784</p>
+                <button onclick="addToCart({ id: 5, name: 'Romanée-Conti', price: 98, img: 'wow/redwine/Romanée-Conti.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/Sassicaia.png" alt="Sassicaia">
+                <h2>Sassicaia</h2>
+                <p>5,784</p>
+                <button onclick="addToCart({ id: 5, name: 'Sassicaia', price: 98, img: 'wow/redwine/Sassicaia.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+            <div class="product-card">
+                <img src="wow/redwine/vega sicilia unico.png" alt="Vega Sicilia Unico">
+                <h2>Vega Sicilia Unico</h2>
+                <p>5,784</p>
+                <button onclick="addToCart({ id: 5, name: 'Vega Sicilia Unico', price: 98, img: 'wow/redwine/vega sicilia unico.png' })">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+  <p>© 2025 Night Owl Liquor. All rights reserved.</p>
+</footer>
+
+<script>
+
+async function fetchProducts() {
+    const response = await fetch('products.php');
+    const products = await response.json();
+
+    const productContainer = document.getElementById('product-container');
+    productContainer.innerHTML = "";
+
+    if (Array.isArray(products) && products.length > 0) {
+        products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+            productCard.innerHTML = `
+                <img src="${product.image_url}" alt="${product.name}">
+                <h2>${product.name}</h2>
+                <p>$${product.price}</p>
+                <button onclick="addToCart({ id: ${product.id}, name: '${product.name}', price: ${product.price}, img: '${product.image_url}' })">
+                    Add to Cart
+                </button>
+            `;
+            productContainer.appendChild(productCard);
+        });
+    } else {
+        productContainer.innerHTML = "<p>No products found.</p>";
+    }
+}
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(item) {
+    const existing = cart.find(i => i.id === item.id);
+    if (existing) {
+        existing.quantity++;
+    } else {
+        item.quantity = 1;
+        cart.push(item);
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+}
+
+function updateCartCount() {
+    const count = cart.reduce((total, item) => total + item.quantity, 0);
+    document.getElementById("cart-count").textContent = count;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateCartCount();
+    fetchProducts(); 
+});
+</script>
+
+</body>
+</html>
